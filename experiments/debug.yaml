@@ -1,0 +1,123 @@
+id: ColBERT_Pruning_Training_Debug
+description: |
+    The training procedure of the colbert with projector.
+    During this procedure we apply an additional projector and
+    hoping to have the following property for the output vectors of
+    colbert
+    1. tokens from the same documents are close to each other -> to decrease
+    the number of clusters for each document
+    2. diminue the norm for some tokens which are not interesting at all.
+
+gpu: true
+file: experiment
+validation:
+    size: 10
+    validation_interval: 5
+    validation_top_k: 20
+
+indexation:
+    max_docs: 100_000
+    requirements: duration=2 days & cuda(mem=12G)
+
+colbert:
+    hf_id: colbert-ir/colbertv2.0
+    from_scratch: False
+    tokenize_option:
+        qlen: 32
+        dlen: 180
+        dlen_OoD: 300
+    colbert_train:
+        distil_data_path: /home/zong/colbert_distillation/samples.json
+        nway: 4
+        reg:
+            proj_norm_regu:
+                coeff_d: 0.01
+                coeff_q: 0.01
+                d_type: 1
+                q_type: 1
+            nuc_norm_regu:
+                coeff: 0
+            doc_sim_regu:
+                coeff: 0
+    colbert_projector:
+        ns_dim_doc: 32
+        eps: 1e-3
+
+learning:
+    optimization:
+        alpha_lr: 0
+        scheduler: true
+        num_warmup_steps: 20
+        steps_per_epoch: 10
+        batch_size: 2
+        max_epochs: 10
+        weight_decay: 0.01
+        lr: 1.0e-5
+        eps: 1.0e-8
+        warmup_min_factor: 1000
+    requirements: duration=2 days & cuda(mem=12G)
+
+evaluation:
+    evaluate_in_domain: True
+    using_best_validate: True
+    # evaluate_metric_names: ["RR@10", "RR@10_LP_F0.5", "RR@10_LP_F1", "RR@10_LP_F2", "RR@10_LP_F4", "RR@10_LP_Finf"]
+    evaluate_metric_names: ["RR@10", "RR@10_LP_F2"]
+    pruning:
+        evaluation_norm_threshold: [0.1, 0.5]
+        evaluation_LP_ratio_threshold: [0.7, 0.9]
+    ood_set:
+        name: [
+            # "Climate-FEVER",
+            # "DBPedia",
+            # "FiQA",
+            # "NFCorpus",
+            # "NQ",
+            # "Quora",
+            # "SCIDOCS",
+            # "SciFact",
+            "TREC-COVID",
+            # "Touche2020-v2",
+            # "Lotte-Wrt-search",
+            "Lotte-Rcr-search",
+            # "Lotte-Sci-search",
+            # "Lotte-Tch-search",
+            # "Lotte-LS-search",
+        ]
+        documents: [
+            # "irds.beir.climate-fever.documents",
+            # "irds.beir.dbpedia-entity.documents",
+            # "irds.beir.fiqa.documents",
+            # "irds.beir.nfcorpus.documents",
+            # "irds.beir.nq.documents",
+            # "irds.beir.quora.documents",
+            # "irds.beir.scidocs.documents",
+            # "irds.beir.scifact.documents",
+            "irds.beir.trec-covid.documents",
+            # "irds.beir.webis-touche2020.v2.documents",
+            # "irds.lotte.writing.test.documents",
+            "irds.lotte.recreation.test.documents",
+            # "irds.lotte.science.test.documents",
+            # "irds.lotte.technology.test.documents",
+            # "irds.lotte.lifestyle.test.documents",
+        ]
+        test: [
+            # "irds.beir.climate-fever",
+            # "irds.beir.dbpedia-entity.test",
+            # "irds.beir.fiqa.test",
+            # "irds.beir.nfcorpus.test",
+            # "irds.beir.nq",
+            # "irds.beir.quora.test",
+            # "irds.beir.scidocs",
+            # "irds.beir.scifact.test",
+            "irds.beir.trec-covid",
+            # "irds.beir.webis-touche2020.v2",
+            # "irds.lotte.writing.test.search",
+            "irds.lotte.recreation.test.search",
+            # "irds.lotte.science.test.search",
+            # "irds.lotte.technology.test.search",
+            # "irds.lotte.lifestyle.test.search",
+        ]
+    retrieval:
+        k: 10
+        batch_size: 10
+        requirements: "duration=1 days & cuda(mem=12G)"
