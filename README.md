@@ -1,12 +1,13 @@
 Towards Lossless Token Pruning in Late-Interaction Retrieval Models
 ===
 
-This repository contains all the details, configurations and scripts necessary in order to reproduce the experiments led in the coontext of the paper *Towards Lossless Token Pruning in Late-Interaction Retrieval Models* by Yuxuan Zong and Benjamin Piwowarski, that was accepted at SIGIR 2025.
+This repository contains all the details, configurations and scripts necessary in order to reproduce the experiments led in the context of the paper *Towards Lossless Token Pruning in Late-Interaction Retrieval Models* by Yuxuan Zong and Benjamin Piwowarski, that was accepted at SIGIR 2025.
 
 ## Table of Contents
 
 * [Installation](#installation)
 * [Examples](#examples)
+* [Experiment Details](#experiment-details)
 * [Contact](#contact)
 * [Citation](#citation)
 
@@ -46,7 +47,7 @@ wget https://huggingface.co/colbert-ir/colbertv2.0_msmarco_64way/resolve/main/ex
 ```
 
 #### Evaluation
-We make use of the package `ir-datasets` together with `datamaestro` to facilitate the access of the datasets in our experiments. In `.yaml` file, we only an example of using the *TREC-COVID* and *LoTTE-recreation* for the out-of-domain evaluation and commented out the other dataset used in our experiments.
+We make use of the package [`ir-datasets`](https://ir-datasets.com/) together with [`datamaestro`](https://github.com/experimaestro/datamaestro_text) to facilitate the access of the datasets in our experiments. In `.yaml` file, we only an example of using the *TREC-COVID* and *LoTTE-recreation* for the out-of-domain evaluation and commented out the other dataset used in our experiments.
 
 To use other dataset, please use the following command to check the availability:
 ```unix
@@ -55,7 +56,7 @@ datamaestro search <dataset_name>
 
 ## Contact
 
-Please feel free to email Yuxuan or the academic' supervisors Benjamin at (name).(surname)@isir.upmc.fr
+Please feel free to email Yuxuan or the academic' supervisor Benjamin at (name).(surname)@isir.upmc.fr
 
 ## Citation
 
