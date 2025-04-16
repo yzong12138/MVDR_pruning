@@ -10,6 +10,8 @@ description: |
 
 gpu: true
 file: experiment
+pythonpath: [..]
+
 validation:
     size: 1000
     validation_interval: 20
@@ -26,7 +28,7 @@ colbert:
         dlen: 180
         dlen_OoD: 300
     colbert_train:
-        distil_data_path: /home/zong/colbert_distillation/samples.json
+        distil_data_path: /path/to/colbert/distilation/path
         nway: 16
         reg:
             proj_norm_regu:

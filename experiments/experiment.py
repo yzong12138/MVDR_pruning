@@ -386,7 +386,7 @@ def run(
             evaluate_set.evaluate_second_stage_retriever(
                 retrievers=second_stage_retrievers,
                 launcher=launcher,
-                model_id="colbert" + model_id,
+                model_id=None,
                 init_tasks=[
                     load_model,
                 ],

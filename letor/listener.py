@@ -215,7 +215,7 @@ class DominaceValidationInteractionListener(ValidationListener):
                         metric_values.append(f_metric)
                         metric_names.append(f"{metric}_LP_{f_name}")
 
-                if self.should_update_validation(state):
+                if state.epoch >= self.warmup:
                     for metric_name, metric_value in zip(metric_names, metric_values):
                         topstate = self.top.get(metric_name, None)
                         if topstate is None or metric_value > topstate["value"]:

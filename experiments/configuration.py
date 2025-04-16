@@ -1,6 +1,5 @@
 from attrs import Factory, field
 from typing import List
-from functools import cached_property
 
 from xpmir.papers import configuration
 from experimaestro.experiments.configuration import ConfigurationBase
@@ -9,12 +8,7 @@ from functools import cached_property as attrs_cached_property
 from xpmir.letor import Random
 from xpmir.learning.devices import Device, CudaDevice
 from xpmir.papers.helpers.samplers import ValidationSample
-from xpmir.papers.helpers.optim import TransformerOptimization
-from xpmir.learning.optim import (
-    get_optimizers,
-    ParameterOptimizer,
-    RegexParameterFilter,
-)
+from experiments.config_optim import ColBERTOptimization
 
 
 @configuration()
@@ -158,53 +152,6 @@ class ColBERT:
         ColbertProjectorConfiguration
     )
     """The hyperparmeters related to the projector"""
-
-
-@configuration()
-class ColBERTOptimization(TransformerOptimization):
-    """This optimization propose a optimizer with a different lr for the
-    alpha"""
-
-    alpha_lr: float = 5.0e-3
-    """The learning rate for the alpha"""
-
-    alpha_param_name: List[str] = ["alpha"]
-
-    @cached_property
-    def optimizer(self):
-        if not self.re_no_l2_regularization:
-            return get_optimizers(
-                [
-                    ParameterOptimizer(
-                        scheduler=self.scheduler_instance,
-                        optimizer=self.get_optimizer(False, self.alpha_lr),
-                        filter=RegexParameterFilter(includes=self.alpha_param_name),
-                    ),
-                    ParameterOptimizer(
-                        scheduler=self.scheduler_instance,
-                        optimizer=self.get_optimizer(True, self.lr),
-                    ),
-                ]
-            )
-
-        return get_optimizers(
-            [
-                ParameterOptimizer(
-                    scheduler=self.scheduler_instance,
-                    optimizer=self.get_optimizer(False, self.alpha_lr),
-                    filter=RegexParameterFilter(includes=self.alpha_param_name),
-                ),
-                ParameterOptimizer(
-                    scheduler=self.scheduler_instance,
-                    optimizer=self.get_optimizer(False, self.lr),
-                    filter=RegexParameterFilter(includes=self.re_no_l2_regularization),
-                ),
-                ParameterOptimizer(
-                    scheduler=self.scheduler_instance,
-                    optimizer=self.get_optimizer(True, self.lr),
-                ),
-            ]
-        )
 
 
 @configuration()

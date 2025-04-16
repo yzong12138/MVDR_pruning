@@ -10,6 +10,8 @@ description: |
 
 gpu: true
 file: experiment
+pythonpath: [..]
+
 validation:
     size: 10
     validation_interval: 5
@@ -27,7 +29,7 @@ colbert:
         dlen: 180
         dlen_OoD: 300
     colbert_train:
-        distil_data_path: /home/zong/colbert_distillation/samples.json
+        distil_data_path: /path/to/colbert/distilation/path
         nway: 4
         reg:
             proj_norm_regu:
@@ -61,10 +63,10 @@ evaluation:
     evaluate_in_domain: True
     using_best_validate: True
     # evaluate_metric_names: ["RR@10", "RR@10_LP_F0.5", "RR@10_LP_F1", "RR@10_LP_F2", "RR@10_LP_F4", "RR@10_LP_Finf"]
-    evaluate_metric_names: ["RR@10", "RR@10_LP_F2"]
+    evaluate_metric_names: ["RR@10_LP_F2"]
     pruning:
-        evaluation_norm_threshold: [0.1, 0.5]
-        evaluation_LP_ratio_threshold: [0.7, 0.9]
+        evaluation_norm_threshold: [0.1]
+        evaluation_LP_ratio_threshold: [0.7]
     ood_set:
         name: [
             # "Climate-FEVER",
@@ -118,6 +120,6 @@ evaluation:
             # "irds.lotte.lifestyle.test.search",
         ]
     retrieval:
-        k: 10
+        k: 100
         batch_size: 10
         requirements: "duration=1 days & cuda(mem=12G)"
