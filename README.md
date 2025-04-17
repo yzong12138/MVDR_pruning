@@ -17,15 +17,6 @@ The repository is build based on the [experimaestro-ir](https://github.com/exper
 
 The repository can be installed locally by cloning it before running `pip install -r requirements.txt` (Note that in order to get everything to work you might need to ponctually install other libs).
 
-## Examples
-Following the [experimaestro framework](https://experimaestro-python.readthedocs.io/en/latest/), the whole pipeline of indexing, training, evaluating are defined under *Experiment* scripts, controlled by configuration file written in YAML. Examples of such files are available under the [experiment](experiments) folder of the repository.
-
-To launch the experiment use the following command:
-```unix
- experimaestro run-experiment /path/to/the/config/file --workdir /your/working/directory/
-```
-Alternatively, if you want to make sure that everything is setup correctly before starting your experiment, you can add the option `--run-mode dry-run` to the command above (Go over the experimental plan without launching the task).
-
 ## Experiment Details
 
 For the hyperparameters of the model, please find the details in the `.yaml` files. We show several important ones in the following part:
@@ -53,6 +44,18 @@ To use other dataset, please use the following command to check the availability
 ```unix
 datamaestro search <dataset_name>
 ```
+
+## Experiments Reproduction
+
+In this part, we describe how to reproduce the In-domain and Out-of-domain Evaluation Results presented in the paper. Following the [experimaestro framework](https://experimaestro-python.readthedocs.io/en/latest/), the whole pipeline of indexing, training, evaluating are defined under *Experiment* scripts, controlled by configuration file written in YAML. Examples of such files are available under the [experiments](experiments) folder of the repository. We can run the following command to launch the experiments:
+
+````unix
+experimaestro run-experiment experiments/normal.yaml --workdir /your/working/directory/
+````
+
+Alternatively, if you want to make sure that everything is setup correctly before starting your experiment, you can add the option `--run-mode dry-run` to the command above (Go over the experimental plan without launching the task).
+
+The `experiments/normal.yaml` already contains the hyperparameters we need to reproduce the in-domain evaluations. To evaluate on out-of-domain dataset, please set the `evaluate_in_domain` to `false` in the `.yaml` file.
 
 ## Contact
 
