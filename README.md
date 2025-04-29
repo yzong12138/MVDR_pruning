@@ -63,4 +63,11 @@ Please feel free to email Yuxuan or the academic' supervisor Benjamin at (name).
 
 ## Citation
 
-Coming soon...
+```
+@article{zong2025towards,
+  title={Towards Lossless Token Pruning in Late-Interaction Retrieval Models},
+  author={Zong, Yuxuan and Piwowarski, Benjamin},
+  journal={arXiv preprint arXiv:2504.12778},
+  year={2025}
+}
+```
