@@ -17,6 +17,8 @@ The repository is build based on the [experimaestro-ir](https://github.com/exper
 
 The repository can be installed locally by cloning it before running `pip install -r requirements.txt` (Note that in order to get everything to work you might need to ponctually install other libs).
 
+When setting the experimaestro experiments, you also need to prepare a `launcher.py` under the folder `~/.config/experimaestro`. Examples could be found [here](https://experimaestro-python.readthedocs.io/en/latest/launchers/#launcher-file-since-124)
+
 ## Experiment Details
 
 For the hyperparameters of the model, please find the details in the `.yaml` files. We show several important ones in the following part:
